@@ -1,3 +1,10 @@
+:root {
+  --primary-bg-color: #121212;
+  --secondary-bg-color: #1f1f1f;
+  --text-color: #e0e0e0;
+  --highlight-color: #01b4e4; 
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,21 +13,14 @@
 
 html, body {
   height: 100%;
+  background-color: var(--primary-bg-color);
+  color: var(--text-color);
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--primary-bg-color);
-  color: var(--text-color);
-}
-
-:root {
-  --primary-bg-color: #121212;
-  --secondary-bg-color: #1f1f1f;
-  --text-color: #e0e0e0;
-  --highlight-color: #01b4e4; 
 }
 
 #root {
@@ -99,7 +99,6 @@ a {
 a:hover {
   color: var(--highlight-color);
 }
-
 
 .footer {
   flex-shrink: 0;
