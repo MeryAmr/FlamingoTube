@@ -38,4 +38,4 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       </Router>
     </AuthProvider>
   </React.StrictMode>
-)
+);

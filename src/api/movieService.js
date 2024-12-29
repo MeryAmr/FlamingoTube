@@ -16,7 +16,6 @@ export const discoverMovies = async ({ page = 1 } = {}) => {
     throw new Error(error.response?.data?.status_message || 'Failed to fetch movies');
   }
 };
-
 export const getTrendingMovies = async () => {
   try {
     const response = await tmdbApi.get('/trending/movie/day', {
@@ -41,5 +40,6 @@ export const getTopRatedMovies = async () => {
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.status_message || 'Failed to fetch top rated movies');
+
   }
 };
