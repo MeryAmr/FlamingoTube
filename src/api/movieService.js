@@ -16,17 +16,30 @@ export const discoverMovies = async ({ page = 1 } = {}) => {
     throw new Error(error.response?.data?.status_message || 'Failed to fetch movies');
   }
 };
-export const searchMovies = async (query, page = 1) => {
+export const getTrendingMovies = async () => {
   try {
-    const response = await tmdbApi.get('/search/movie', {
+    const response = await tmdbApi.get('/trending/movie/day', {
       params: {
-        query,
-        page,
-        language: 'en-US',
-      },
+        language: 'en-US'
+      }
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.status_message || 'Failed to fetch search results');
+    throw new Error(error.response?.data?.status_message || 'Failed to fetch trending movies');
+  }
+};
+
+export const getTopRatedMovies = async () => {
+  try {
+    const response = await tmdbApi.get('/movie/top_rated', {
+      params: {
+        language: 'en-US',
+        page: 1
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.status_message || 'Failed to fetch top rated movies');
+
   }
 };

@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { discoverMovies } from '../api/movieService';
+import { useNavigate } from 'react-router-dom';
+import { discoverMovies, getTrendingMovies, getTopRatedMovies } from '../api/movieService';
+import { useAuth } from '../context/AuthContext';
 import MovieGrid from '../components/MovieGrid';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 
 const MovieDiscovery = () => {
-  const [movies, setMovies] = useState([]);
+  const [featuredMovies, setFeaturedMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
+  
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchAllMovies = async () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await discoverMovies({ page });
-        setMovies(data.results);
+        
+        const [discoverData, trendingData, recommendedData] = await Promise.all([
+          discoverMovies({ page: 1 }),
+          getTrendingMovies(),
+          getTopRatedMovies()
+        ]);
+
+        setFeaturedMovies(discoverData.results.slice(0, 5));
+        setTrendingMovies(trendingData.results.slice(0, 10));
+        setRecommendations(recommendedData.results.slice(0, 10));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -24,30 +38,40 @@ const MovieDiscovery = () => {
       }
     };
 
-    fetchMovies();
-  }, [page]);
+    fetchAllMovies();
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/auth');
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;
 
   return (
-    <div>
-      <h1>Discover Movies</h1>
-      <MovieGrid movies={movies} />
-      <div>
-        <button 
-          onClick={() => setPage(p => Math.max(1, p - 1))}
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <span>Page {page}</span>
-        <button 
-          onClick={() => setPage(p => p + 1)}
-        >
-          Next
+    <div className="home-container">
+      <div className="header">
+        <h1>Welcome, {user.username}!</h1>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
         </button>
       </div>
+
+      <section className="featured-section">
+        <h2>Featured Movies</h2>
+        <MovieGrid movies={featuredMovies} />
+      </section>
+
+      <section className="trending-section">
+        <h2>Trending Now</h2>
+        <MovieGrid movies={trendingMovies} />
+      </section>
+
+      <section className="recommendations-section">
+        <h2>Recommended for You</h2>
+        <MovieGrid movies={recommendations} />
+      </section>
     </div>
   );
 };
