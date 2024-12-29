@@ -68,6 +68,28 @@ body {
   color: var(--highlight-color);
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.play-now-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.play-now-btn:hover {
+  background-color: #45a049;
+}
+
 .main-content {
   flex: 1 0 auto;
   padding-top: 60px;
@@ -148,4 +170,50 @@ a:hover {
 
 .footer .icon:hover {
   border-color: var(--highlight-color); 
+}
+
+.movie-details .play-now-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.movie-details .play-now-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.play-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  background-color: #1a1a1a;
+  padding: 2rem;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 1/1;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

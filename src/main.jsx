@@ -6,8 +6,10 @@ import Footer from './components/Footer';
 import MovieDetails from './pages/MovieDetails';
 import MovieDiscovery from './pages/MovieDiscovery';
 import SearchPage from './pages/SearchPage';
+import PlayPage from './pages/PlayPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.css';
+
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <React.StrictMode>
@@ -18,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
           <Routes>
             <Route path="/" element={<MovieDiscovery />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/play/:id" element={<PlayPage />} />
             <Route path="/search" element={<SearchPage />} />
           </Routes>
         </main>

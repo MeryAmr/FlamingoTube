@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Badge } from 'react-bootstrap';
 import { getMovieDetails } from '../api/tmdb';
 import Cast from '../components/Cast';
@@ -9,6 +9,7 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,10 @@ const MovieDetails = () => {
       fetchMovieDetails();
     }
   }, [id]);
+
+  const handlePlayClick = () => {
+    navigate(`/play/${id}`);
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;
@@ -61,6 +66,9 @@ const MovieDetails = () => {
             </Badge>
           </div>
           <p className="lead">{movie.overview}</p>
+          <button className="play-now-btn" onClick={handlePlayClick}>
+            PLAY NOW
+          </button>
         </Col>
       </Row>
       <Row>

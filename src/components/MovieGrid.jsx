@@ -1,9 +1,25 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Pagination, Stack } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import MovieCard from './MovieCard';
+
+// Create a dark theme for the pagination
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#4CAF50',
+    },
+  },
+});
 
 const MovieGrid = ({ movies, page, onPageChange, totalPages }) => {
   if (!movies?.length) return <p>No movies found</p>;
+
+  const handlePageChange = (event, value) => {
+    onPageChange(value);
+  };
 
   return (
     <Container>
@@ -14,23 +30,19 @@ const MovieGrid = ({ movies, page, onPageChange, totalPages }) => {
           </Col>
         ))}
       </Row>
-      <div className="d-flex justify-content-center align-items-center gap-3 my-4">
-        <Button 
-          variant="primary"
-          onClick={() => onPageChange(page - 1)}
-          disabled={page === 1}
-        >
-          Previous
-        </Button>
-        <span className="fw-bold">Page {page}</span>
-        <Button 
-          variant="primary"
-          onClick={() => onPageChange(page + 1)}
-          disabled={page === totalPages}
-        >
-          Next
-        </Button>
-      </div>
+      <ThemeProvider theme={darkTheme}>
+        <Stack spacing={2} alignItems="center" sx={{ my: 3 }}>
+          <Pagination 
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
+      </ThemeProvider>
     </Container>
   );
 };

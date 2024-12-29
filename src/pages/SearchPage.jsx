@@ -4,7 +4,6 @@ import { searchMovies } from '../api/movieService';
 import MovieGrid from '../components/MovieGrid';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
-import '../styles/global.css';
 import '../styles/SearchPage.css';
 
 const SearchPage = () => {
