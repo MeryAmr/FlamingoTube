@@ -16,3 +16,17 @@ export const discoverMovies = async ({ page = 1 } = {}) => {
     throw new Error(error.response?.data?.status_message || 'Failed to fetch movies');
   }
 };
+export const searchMovies = async (query, page = 1) => {
+  try {
+    const response = await tmdbApi.get('/search/movie', {
+      params: {
+        query,
+        page,
+        language: 'en-US',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.status_message || 'Failed to fetch search results');
+  }
+};
