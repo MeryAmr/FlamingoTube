@@ -1,0 +1,66 @@
+.title {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.genreButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+.genreButton {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.genreButton:hover {
+  background-color: rgba(33, 150, 243, 0.2);
+  transform: translateY(-2px);
+}
+
+.genreButton.selected {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.movieSection {
+  margin-top: 2rem;
+}
+
+.genreTitle {
+  color: var(--text-color);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .genreButton {
+    padding: 0.5rem 1rem;
+    min-width: 100px;
+    font-size: 0.9rem;
+  }
+
+  .genreTitle {
+    font-size: 1.5rem;
+  }
+}

@@ -17,11 +17,11 @@ const MovieCard = ({ movie }) => {
           className="movie-poster"
         />
         <Card.Body>
-          <Card.Title className="text-dark">{movie.title}</Card.Title>
+          <Card.Title>{movie.title}</Card.Title>
           <Card.Text>
             <span className="text-warning">★ {movie.vote_average.toFixed(1)}/10</span>
             <br />
-            <small className="text-muted">{movie.release_date}</small>
+            <small className="text-white">{movie.release_date}</small>
           </Card.Text>
         </Card.Body>
       </Card>

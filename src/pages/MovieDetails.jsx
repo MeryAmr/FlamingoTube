@@ -13,6 +13,7 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -21,6 +22,8 @@ const MovieDetails = () => {
         setError(null);
         const data = await getMovieDetails(id);
         setMovie(data);
+        const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+        setIsInWatchlist(watchlist.some(m => m.id === data.id));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -35,6 +38,25 @@ const MovieDetails = () => {
 
   const handlePlayClick = () => {
     navigate(`/play/${id}`);
+  };
+
+  const toggleWatchlist = () => {
+    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    
+    if (isInWatchlist) {
+      const newWatchlist = watchlist.filter(m => m.id !== movie.id);
+      localStorage.setItem('watchlist', JSON.stringify(newWatchlist));
+      setIsInWatchlist(false);
+    } else {
+      const newWatchlist = [...watchlist, {
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        vote_average: movie.vote_average
+      }];
+      localStorage.setItem('watchlist', JSON.stringify(newWatchlist));
+      setIsInWatchlist(true);
+    }
   };
 
   if (loading) return <LoadingSpinner />;
@@ -61,13 +83,32 @@ const MovieDetails = () => {
             <Badge bg="warning" text="dark" className="me-2">
               ★ {movie.vote_average.toFixed(1)}/10
             </Badge>
-            <Badge bg="secondary">
+            <Badge bg="secondary" className="me-2">
               {new Date(movie.release_date).getFullYear()}
             </Badge>
+            {movie.genres && movie.genres.map(genre => (
+              <Badge 
+                key={genre.id} 
+                style={{ 
+                  backgroundColor: '#6ac045',
+                  cursor: 'pointer'
+                }}
+                className="me-2"
+                onClick={() => navigate(`/browse-genres?genre=${genre.id}`)}
+              >
+                {genre.name}
+              </Badge>
+            ))}
           </div>
           <p className="lead">{movie.overview}</p>
           <button className="play-now-btn" onClick={handlePlayClick}>
             PLAY NOW
+          </button>
+          <button 
+            className={`watchlist-btn ${isInWatchlist ? 'in-watchlist' : ''}`} 
+            onClick={toggleWatchlist}
+          >
+            {isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
           </button>
         </Col>
       </Row>
